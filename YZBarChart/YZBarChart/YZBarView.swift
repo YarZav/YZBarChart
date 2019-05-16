@@ -8,6 +8,30 @@
 
 import UIKit
 
+/// Configuration
+public struct YZBarViewConfiguration {
+    
+    /// Max height of Bar view
+    public var maxHeight: Double = 200.0
+    
+    /// Separate color
+    public var separateColor: UIColor = .black
+    
+    /// Color under bar
+    public var bckgroundColor: UIColor = UIColor.white.withAlphaComponent(0.2)
+    
+    /// Bar color
+    public var barColor: UIColor = UIColor(white: 0.8, alpha: 1)
+    
+    /// Bar color when touch it
+    public var barTouchColor: UIColor = .lightGray
+    
+    /// animateion duration to grow up
+    public var animateDuration = TimeInterval(0.3)
+    
+    public init() { }
+}
+
 //MARK: - YZBarViewModel
 open class YZBarViewModel {
     
@@ -32,12 +56,13 @@ open class YZBarView: UIView {
     
     public var bar = UIView()
     
+    private var config = YZBarViewConfiguration()
     private var heightBarConstraint: NSLayoutConstraint?
-    private var animateDuration = TimeInterval(0.3)
     
     //Init - isLastBar (draw right vertical line if needed), model - model for display, maxModel - model with maximum value by Y value (depends on max Y axis value)
-    public init(isLastBar: Bool, model: YZBarViewModel, maxModel: YZBarViewModel?) {
+    public init(isLastBar: Bool, model: YZBarViewModel, configuration: YZBarViewConfiguration, maxModel: YZBarViewModel?) {
         super.init(frame: .zero)
+        self.config = configuration
         self.model = model
         self.maxModel = maxModel
         self.createUI(isLastBar: isLastBar)
@@ -54,11 +79,11 @@ extension YZBarView {
     
     public func didTouch(_ touched: Bool) {
         if touched {
-            self.backgroundColor = UIColor.white.withAlphaComponent(0.2)
-            self.bar.backgroundColor = .white
+            self.backgroundColor = self.config.bckgroundColor
+            self.bar.backgroundColor = self.config.barTouchColor
         } else {
             self.backgroundColor = .clear
-            self.bar.backgroundColor = UIColor(white: 0.8, alpha: 1)
+            self.bar.backgroundColor = self.config.barColor
         }
     }
     
@@ -66,13 +91,13 @@ extension YZBarView {
         var y: Double = 0.0
         if let model = self.model {
             if let maxModel = self.maxModel, maxModel.y != 0 {
-                let ratio = 200.0 / maxModel.y
+                let ratio = self.config.maxHeight / maxModel.y
                 y = ratio * (model.y)
             }
         }
         
         self.setNeedsLayout()
-        UIView.animate(withDuration: animated ? self.animateDuration : 0) {
+        UIView.animate(withDuration: animated ? self.config.animateDuration : 0) {
             self.heightBarConstraint?.constant = CGFloat(y)
             self.layoutIfNeeded()
         }
@@ -83,7 +108,7 @@ extension YZBarView {
 extension YZBarView {
     
     private func createUI(isLastBar: Bool) {
-        self.bar.backgroundColor = UIColor(white: 0.8, alpha: 1)
+        self.bar.backgroundColor = self.config.bckgroundColor
         
         let leftLine = UIView()
         leftLine.backgroundColor = .darkGray
@@ -99,7 +124,7 @@ extension YZBarView {
         
         if isLastBar {
             let rightLine = UIView()
-            rightLine.backgroundColor = .darkGray
+            rightLine.backgroundColor = self.config.separateColor
             
             self.addSubview(rightLine)
             

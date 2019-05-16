@@ -8,16 +8,48 @@
 
 import UIKit
 
+// MARK: - Configuration
+public struct YZBarChartViewConfiguration {
+    
+    /// Top description text color
+    public var titleTextColor: UIColor = .white
+    
+    /// Top description text alignment
+    public var titleTextAlignment: NSTextAlignment = .center
+    
+    /// Top description text font
+    public var titleFont: UIFont = UIFont.systemFont(ofSize: 15)
+    
+    /// Bottom separate line color
+    public var separateLineColor: UIColor = .black
+    
+    /// Max count of bars in BarChartView
+    public var maxBarCount: Int = 10
+    
+    /// Description text under bar, text color
+    public var descriptionBarTextColor: UIColor = .black
+    
+    /// Description text under bar, text alignment
+    public var descriptionBarTextAlignment: NSTextAlignment = .center
+    
+    /// Description text under bar, text font
+    public var descriptionBarTextFont: UIFont = UIFont.systemFont(ofSize: 11)
+    
+    public init() { }
+}
+
 // MARK: - YZBarChartView
 open class YZBarChartView: UIView {
     
+    private var config = YZBarChartViewConfiguration()
     private var label = UILabel()
     private var barViews = [YZBarView]()
-    private var models = [YZBarViewModel]()
+    private var viewModels = [(model: YZBarViewModel, config: YZBarViewConfiguration)]()
     
     //Init
-    public init() {
+    public init(configuration: YZBarChartViewConfiguration) {
         super.init(frame: .zero)
+        self.config = configuration
         self.createUI()
     }
     
@@ -73,8 +105,8 @@ open class YZBarChartView: UIView {
 extension YZBarChartView {
     
     /// Display data
-    public func displayModels(_ models: [YZBarViewModel], animated: Bool) {
-        self.models = models
+    public func displayViewModels(_ viewModels: [(model: YZBarViewModel, config: YZBarViewConfiguration)], animated: Bool) {
+        self.viewModels = viewModels
         
         self.subviews.forEach { $0.removeFromSuperview() }
         self.createUI()
@@ -97,9 +129,9 @@ extension YZBarChartView {
     
     private func createUI() {
         //Top label, which contains info when tapped on bar
-        self.label.textColor = .white
-        self.label.textAlignment = .center
-        self.label.font = UIFont.systemFont(ofSize: 15)
+        self.label.textColor = self.config.titleTextColor
+        self.label.textAlignment = self.config.titleTextAlignment
+        self.label.font = self.config.titleFont
         self.addSubview(self.label)
         
         self.label.translatesAutoresizingMaskIntoConstraints = false
@@ -110,7 +142,7 @@ extension YZBarChartView {
         
         //Bottom separate line (width equal all YZBarChartView)
         let bottomLineView = UIView()
-        bottomLineView.backgroundColor = .darkGray
+        bottomLineView.backgroundColor = self.config.separateLineColor
         
         self.addSubview(bottomLineView)
         bottomLineView.translatesAutoresizingMaskIntoConstraints = false
@@ -120,23 +152,23 @@ extension YZBarChartView {
         NSLayoutConstraint(item: bottomLineView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 1).isActive = true
         
         //If count of models equal 0, do not draw anything
-        if self.models.isEmpty { return }
+        if self.viewModels.isEmpty { return }
         
         //Get model with max Y axis value
-        let maxModel = self.models.max { $0.y < $1.y }
+        let maxModel = self.viewModels.max { $0.model.y < $1.model.y }
         
         //Do not show more then 10 bars (thay are do not display all in screen and it will be draw too long)
-        let comparison = self.models.count > 10 ? 10 : 1
-        let attitude = comparison == 1 ? 1 : self.models.count / comparison
+        let comparison = self.viewModels.count > self.config.maxBarCount ? self.config.maxBarCount : 1
+        let attitude = comparison == 1 ? 1 : self.viewModels.count / comparison
         
         var previousView: YZBarView?
         var previousDescription: UILabel?
         
         //Draw bars one by one from left to right
-        for (modelIndex, model) in self.models.enumerated() {
-            let isLastIndex = modelIndex == self.models.count - 1
+        for (modelIndex, viewModel) in self.viewModels.enumerated() {
+            let isLastIndex = modelIndex == self.viewModels.count - 1
             
-            let barView = YZBarView(isLastBar: isLastIndex, model: model, maxModel: maxModel)
+            let barView = YZBarView(isLastBar: isLastIndex, model: viewModel.model, configuration: viewModel.config, maxModel: maxModel?.model)
             barView.tag = modelIndex
             
             self.barViews.append(barView)
@@ -159,10 +191,10 @@ extension YZBarChartView {
             
             if modelIndex % attitude == 0 {
                 let descriptionLabel = UILabel()
-                descriptionLabel.textColor = .white
-                descriptionLabel.textAlignment = .center
-                descriptionLabel.font = UIFont.systemFont(ofSize: 11)
-                descriptionLabel.text = model.x
+                descriptionLabel.textColor = self.config.descriptionBarTextColor
+                descriptionLabel.textAlignment = self.config.descriptionBarTextAlignment
+                descriptionLabel.font = self.config.descriptionBarTextFont
+                descriptionLabel.text = viewModel.model.x
                 
                 self.addSubview(descriptionLabel)
                 
@@ -176,11 +208,11 @@ extension YZBarChartView {
                     NSLayoutConstraint(item: descriptionLabel, attribute: .left, relatedBy: .equal, toItem: self, attribute: .left, multiplier: 1, constant: 0).isActive = true
                 }
                 if comparison == 1 {
-                    if modelIndex == (self.models.count - 1) {
+                    if modelIndex == (self.viewModels.count - 1) {
                         NSLayoutConstraint(item: descriptionLabel, attribute: .right, relatedBy: .equal, toItem: self, attribute: .right, multiplier: 1, constant: 0).isActive = true
                     }
                 } else {
-                    if (modelIndex + attitude) == self.models.count {
+                    if (modelIndex + attitude) == self.viewModels.count {
                         NSLayoutConstraint(item: descriptionLabel, attribute: .right, relatedBy: .equal, toItem: self, attribute: .right, multiplier: 1, constant: 0).isActive = true
                     }
                 }
