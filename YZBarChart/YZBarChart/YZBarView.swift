@@ -120,7 +120,7 @@ extension YZBarView {
         self.bar.backgroundColor = self.config.bckgroundColor
         
         let leftLine = UIView()
-        leftLine.backgroundColor = .darkGray
+        leftLine.backgroundColor = self.config.separateColor
         
         self.addSubview(leftLine)
         self.addSubview(self.bar)
