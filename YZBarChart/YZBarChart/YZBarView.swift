@@ -117,8 +117,8 @@ extension YZBarView {
 extension YZBarView {
     
     private func createUI(isLastBar: Bool) {
-        self.bar.backgroundColor = self.config.bckgroundColor
-        
+        self.bar.backgroundColor = self.config.barColor
+
         let leftLine = UIView()
         leftLine.backgroundColor = self.config.separateColor
         
