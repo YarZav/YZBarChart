@@ -26,15 +26,6 @@ public struct YZBarChartViewConfiguration {
     /// Max count of bars in BarChartView
     public var maxBarCount: Int = 10
     
-    /// Description text under bar, text color
-    public var descriptionBarTextColor: UIColor = .black
-    
-    /// Description text under bar, text alignment
-    public var descriptionBarTextAlignment: NSTextAlignment = .center
-    
-    /// Description text under bar, text font
-    public var descriptionBarTextFont: UIFont = UIFont.systemFont(ofSize: 11)
-    
     public init() { }
 }
 
@@ -191,9 +182,9 @@ extension YZBarChartView {
             
             if modelIndex % attitude == 0 {
                 let descriptionLabel = UILabel()
-                descriptionLabel.textColor = self.config.descriptionBarTextColor
-                descriptionLabel.textAlignment = self.config.descriptionBarTextAlignment
-                descriptionLabel.font = self.config.descriptionBarTextFont
+                descriptionLabel.textColor = viewModel.config.descriptionBarTextColor
+                descriptionLabel.textAlignment = viewModel.config.descriptionBarTextAlignment
+                descriptionLabel.font = viewModel.config.descriptionBarTextFont
                 descriptionLabel.text = viewModel.model.x
                 
                 self.addSubview(descriptionLabel)

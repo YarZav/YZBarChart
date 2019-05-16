@@ -29,6 +29,15 @@ public struct YZBarViewConfiguration {
     /// animateion duration to grow up
     public var animateDuration = TimeInterval(0.3)
     
+    /// Description text under bar, text color
+    public var descriptionBarTextColor: UIColor = .black
+    
+    /// Description text under bar, text alignment
+    public var descriptionBarTextAlignment: NSTextAlignment = .center
+    
+    /// Description text under bar, text font
+    public var descriptionBarTextFont: UIFont = UIFont.systemFont(ofSize: 11)
+    
     public init() { }
 }
 
