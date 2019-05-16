@@ -21,10 +21,16 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		84758F0D228D558F00F92CDA /* YZBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84758F0C228D558F00F92CDA /* YZBarView.swift */; };
+		84758F0F228D57D100F92CDA /* YZBarChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84758F0E228D57D100F92CDA /* YZBarChartView.swift */; };
+		84758F11228D583A00F92CDA /* YZNumberFormatter+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84758F10228D583A00F92CDA /* YZNumberFormatter+Extension.swift */; };
 		84ECADC3228D4F47000C31D7 /* YZBarChart.h in Headers */ = {isa = PBXBuildFile; fileRef = 84ECADC1228D4F47000C31D7 /* YZBarChart.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		84758F0C228D558F00F92CDA /* YZBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YZBarView.swift; sourceTree = "<group>"; };
+		84758F0E228D57D100F92CDA /* YZBarChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YZBarChartView.swift; sourceTree = "<group>"; };
+		84758F10228D583A00F92CDA /* YZNumberFormatter+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "YZNumberFormatter+Extension.swift"; sourceTree = "<group>"; };
 		84ECADBE228D4F47000C31D7 /* YZBarChart.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = YZBarChart.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		84ECADC1228D4F47000C31D7 /* YZBarChart.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YZBarChart.h; sourceTree = "<group>"; };
 		84ECADC2228D4F47000C31D7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -60,6 +66,9 @@
 		84ECADC0228D4F47000C31D7 /* YZBarChart */ = {
 			isa = PBXGroup;
 			children = (
+				84758F10228D583A00F92CDA /* YZNumberFormatter+Extension.swift */,
+				84758F0E228D57D100F92CDA /* YZBarChartView.swift */,
+				84758F0C228D558F00F92CDA /* YZBarView.swift */,
 				84ECADC1228D4F47000C31D7 /* YZBarChart.h */,
 				84ECADC2228D4F47000C31D7 /* Info.plist */,
 			);
@@ -109,6 +118,7 @@
 				TargetAttributes = {
 					84ECADBD228D4F47000C31D7 = {
 						CreatedOnToolsVersion = 10.2.1;
+						LastSwiftMigration = 1020;
 					};
 					84ECADC9228D4F71000C31D7 = {
 						CreatedOnToolsVersion = 10.2.1;
@@ -168,6 +178,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84758F11228D583A00F92CDA /* YZNumberFormatter+Extension.swift in Sources */,
+				84758F0F228D57D100F92CDA /* YZBarChartView.swift in Sources */,
+				84758F0D228D558F00F92CDA /* YZBarView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -299,6 +312,7 @@
 		84ECADC7228D4F47000C31D7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
@@ -317,6 +331,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = ru.YZO.YZBarChart;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -325,6 +340,7 @@
 		84ECADC8228D4F47000C31D7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
