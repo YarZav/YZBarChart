@@ -73,7 +73,7 @@ open class YZBarChartView: UIView {
 extension YZBarChartView {
     
     /// Display data
-    public func displayModels(_ models: [YZBarViewModel]) {
+    public func displayModels(_ models: [YZBarViewModel], animated: Bool) {
         self.models = models
         
         self.subviews.forEach { $0.removeFromSuperview() }
@@ -81,13 +81,13 @@ extension YZBarChartView {
         
         self.layoutIfNeeded()
         
-        self.showBar(animateion: true)
+        self.showBar(animated: true)
     }
     
     /// Show bar with animation grow up from bottom to top
-    public func showBar(animateion: Bool) {
+    public func showBar(animated: Bool) {
         self.barViews.forEach {
-            $0.showBar(animateion: animateion)
+            $0.showBar(animated: animated)
         }
     }
 }

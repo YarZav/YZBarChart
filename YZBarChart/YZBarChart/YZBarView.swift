@@ -62,7 +62,7 @@ extension YZBarView {
         }
     }
     
-    public func showBar(animateion: Bool) {
+    public func showBar(animated: Bool) {
         var y: Double = 0.0
         if let model = self.model {
             if let maxModel = self.maxModel, maxModel.y != 0 {
@@ -72,7 +72,7 @@ extension YZBarView {
         }
         
         self.setNeedsLayout()
-        UIView.animate(withDuration: animateion ? self.animateDuration : 0) {
+        UIView.animate(withDuration: animated ? self.animateDuration : 0) {
             self.heightBarConstraint?.constant = CGFloat(y)
             self.layoutIfNeeded()
         }
