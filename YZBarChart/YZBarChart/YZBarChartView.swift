@@ -49,27 +49,15 @@ open class YZBarChartView: UIView {
         self.createUI()
     }
     
+    override open func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if touches.count == 1, let touch = touches.first, touch.phase == .began {
+            self.updateBarView(by: touch)
+        }
+    }
+    
     override open func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for touch: AnyObject in touches {
-            let location = touch.location(in: self)
-            
-            var isContainsbarView: Bool = false
-            
-            for barView in self.barViews {
-                let barFrame = self.convert(barView.frame, from: barView.superview)
-                if barFrame.contains(location) {
-                    barView.didTouch(true)
-                    
-                    isContainsbarView = true
-                    self.didTouchBarView(barView)
-                } else {
-                    barView.didTouch(false)
-                }
-            }
-            
-            if !isContainsbarView {
-                self.didTouchBarView(nil)
-            }
+        for touch in touches {
+            self.updateBarView(by: touch)
         }
     }
     
@@ -210,6 +198,28 @@ extension YZBarChartView {
                 
                 previousDescription = descriptionLabel
             }
+        }
+    }
+    
+    private func updateBarView(by touch: UITouch) {
+        let location = touch.location(in: self)
+        
+        var isContainsbarView: Bool = false
+        
+        for barView in self.barViews {
+            let barFrame = self.convert(barView.frame, from: barView.superview)
+            if barFrame.contains(location) {
+                barView.didTouch(true)
+                
+                isContainsbarView = true
+                self.didTouchBarView(barView)
+            } else {
+                barView.didTouch(false)
+            }
+        }
+        
+        if !isContainsbarView {
+            self.didTouchBarView(nil)
         }
     }
 }
