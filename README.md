@@ -12,10 +12,6 @@ IOS framework to show simple chart bar (every can be modified different).
 
 **import YZBarChart**
 
-After that you need to create worker, it is a singleton
-
-**let notificationManager = YZNotificationManager.sharedInstance**
-
 And now you should to add Craetor
 
 **var configuration = YZBarChartViewConfiguration()**  
@@ -31,12 +27,11 @@ After that you can be create barChart view
 
 **var barChartView = YZBarChartView(configuration: configuration)**
 
-And display datas, When you would like to draw data, you need to cerate view model - **YZBarViewModel** and configuration how this bar will be display **YZBarViewConfiguration**
+And display datas, When you would like to draw data, you need to cerate view model - **YZBarViewModel**, which contains model to display and configuration for bar view
 
-**var config = YZBarViewConfiguration()**
+**var config = YZBarConfiguration()**
 
 Variable to customization:
-* maxHeight - max height of bar (need equal to height of bar chart view)
 * separateColor - separate color line between bars
 * bckgroundColor - color under bar
 * barColor - bar color
@@ -46,13 +41,17 @@ Variable to customization:
 * descriptionBarTextAlignment - Description text alignment under bar
 * descriptionBarTextFont - Description text font under bar
 
-Model **YZBarViewModel** contain X value and Y value
+Model **YZBarModel** contain X value and Y value
 
-**var model = YZBarViewModel(x: "0.1", y: 100)**
+**var model = YZBarModel(x: 0.1, y: 100, descriptionX: "A")**
+
+After that create bar view model
+
+**var viewModel = YZBarViewModel(config: config, model: model)**
 
 And now you can display datas
 
-**barChartView.displayViewModels([(model: model, config: config)], animated: true)**
+**barChartView.displayViewModels([viewModel]: , animated: true)**
 
 ## Instalation
 ### Cocoapods
