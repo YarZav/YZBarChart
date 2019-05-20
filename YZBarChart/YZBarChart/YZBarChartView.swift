@@ -35,7 +35,7 @@ open class YZBarChartView: UIView {
     private var config = YZBarChartViewConfiguration()
     private var label = UILabel()
     private var barViews = [YZBarView]()
-    private var viewModels = [(model: YZBarViewModel, config: YZBarViewConfiguration)]()
+    private var viewModels = [YZBarViewModel]()
     
     //Init
     public init(configuration: YZBarChartViewConfiguration) {
@@ -70,9 +70,9 @@ open class YZBarChartView: UIView {
     }
     
     private func didTouchBarView(_ barView: YZBarView?) {
-        if let barView = barView, let model = barView.model {
+        if let model = barView?.viewModel.model {
             let numberFormatter = NumberFormatter.numberFormatter(numberStyle: .currency)
-            let number = NSNumber(value: model.y)
+            let number = NSNumber(value: NSDecimalNumber(decimal: model.y).doubleValue)
             self.label.text = numberFormatter.string(from: number)
         } else {
             self.label.text = nil
@@ -84,7 +84,7 @@ open class YZBarChartView: UIView {
 extension YZBarChartView {
     
     /// Display data
-    public func displayViewModels(_ viewModels: [(model: YZBarViewModel, config: YZBarViewConfiguration)], animated: Bool) {
+    public func displayViewModels(_ viewModels: [YZBarViewModel], animated: Bool) {
         self.viewModels = viewModels
         
         self.subviews.forEach { $0.removeFromSuperview() }
@@ -92,12 +92,13 @@ extension YZBarChartView {
         
         self.layoutIfNeeded()
         
-        self.showBar(animated: true)
+        self.showBars(animated: true)
     }
     
     /// Show bar with animation grow up from bottom to top
-    public func showBar(animated: Bool) {
+    public func showBars(animated: Bool) {
         self.barViews.forEach {
+            $0.delegate = self
             $0.showBar(animated: animated)
         }
     }
@@ -134,7 +135,7 @@ extension YZBarChartView {
         if self.viewModels.isEmpty { return }
         
         //Get model with max Y axis value
-        let maxModel = self.viewModels.max { $0.model.y < $1.model.y }
+        let maxViewModel = self.viewModels.max { $0.model.y < $1.model.y }
         
         //Do not show more then 10 bars (thay are do not display all in screen and it will be draw too long)
         let comparison = self.viewModels.count > self.config.maxBarCount ? self.config.maxBarCount : 1
@@ -147,7 +148,7 @@ extension YZBarChartView {
         for (modelIndex, viewModel) in self.viewModels.enumerated() {
             let isLastIndex = modelIndex == self.viewModels.count - 1
             
-            let barView = YZBarView(isLastBar: isLastIndex, model: viewModel.model, configuration: viewModel.config, maxModel: maxModel?.model)
+            let barView = YZBarView(isLastBar: isLastIndex, viewModel: viewModel, maxViewModel: maxViewModel)
             barView.tag = modelIndex
             
             self.barViews.append(barView)
@@ -173,7 +174,7 @@ extension YZBarChartView {
                 descriptionLabel.textColor = viewModel.config.descriptionBarTextColor
                 descriptionLabel.textAlignment = viewModel.config.descriptionBarTextAlignment
                 descriptionLabel.font = viewModel.config.descriptionBarTextFont
-                descriptionLabel.text = viewModel.model.x
+                descriptionLabel.text = viewModel.model.descriptionX
                 
                 self.addSubview(descriptionLabel)
                 
@@ -221,5 +222,13 @@ extension YZBarChartView {
         if !isContainsbarView {
             self.didTouchBarView(nil)
         }
+    }
+}
+
+// MARK: - YZBarViewDelegate
+extension YZBarChartView: YZBarViewDelegate {
+    
+    public func getBarChartHeight() -> Double {
+        return Double(self.bounds.height)
     }
 }

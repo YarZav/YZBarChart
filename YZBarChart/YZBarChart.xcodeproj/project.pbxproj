@@ -21,6 +21,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		844986162292C8F900A4A308 /* YZBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844986152292C8F900A4A308 /* YZBarViewModel.swift */; };
 		84758F0D228D558F00F92CDA /* YZBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84758F0C228D558F00F92CDA /* YZBarView.swift */; };
 		84758F0F228D57D100F92CDA /* YZBarChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84758F0E228D57D100F92CDA /* YZBarChartView.swift */; };
 		84758F11228D583A00F92CDA /* YZNumberFormatter+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84758F10228D583A00F92CDA /* YZNumberFormatter+Extension.swift */; };
@@ -28,6 +29,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		844986152292C8F900A4A308 /* YZBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YZBarViewModel.swift; sourceTree = "<group>"; };
 		84758F0C228D558F00F92CDA /* YZBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YZBarView.swift; sourceTree = "<group>"; };
 		84758F0E228D57D100F92CDA /* YZBarChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YZBarChartView.swift; sourceTree = "<group>"; };
 		84758F10228D583A00F92CDA /* YZNumberFormatter+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "YZNumberFormatter+Extension.swift"; sourceTree = "<group>"; };
@@ -69,6 +71,7 @@
 				84758F10228D583A00F92CDA /* YZNumberFormatter+Extension.swift */,
 				84758F0E228D57D100F92CDA /* YZBarChartView.swift */,
 				84758F0C228D558F00F92CDA /* YZBarView.swift */,
+				844986152292C8F900A4A308 /* YZBarViewModel.swift */,
 				84ECADC1228D4F47000C31D7 /* YZBarChart.h */,
 				84ECADC2228D4F47000C31D7 /* Info.plist */,
 			);
@@ -181,6 +184,7 @@
 				84758F11228D583A00F92CDA /* YZNumberFormatter+Extension.swift in Sources */,
 				84758F0F228D57D100F92CDA /* YZBarChartView.swift in Sources */,
 				84758F0D228D558F00F92CDA /* YZBarView.swift in Sources */,
+				844986162292C8F900A4A308 /* YZBarViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
