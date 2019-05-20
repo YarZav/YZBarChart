@@ -52,9 +52,11 @@ extension YZBarView {
     }
     
     public func showBar(animated: Bool) {
+        let barHeight = self.delegate?.getBarChartHeight() ?? 0
+        
         var y: Double = 0.0
         if let maxModel = self.maxViewModel?.model, maxModel.y != 0 {
-            let ratio = (self.delegate?.getBarChartHeight() ?? 0) / NSDecimalNumber(decimal: maxModel.y).doubleValue
+            let ratio = barHeight / NSDecimalNumber(decimal: maxModel.y).doubleValue
             y = ratio * NSDecimalNumber(decimal: self.viewModel.model.y).doubleValue
         }
         
@@ -71,7 +73,7 @@ extension YZBarView {
     
     private func createUI(isLastBar: Bool) {
         self.bar.backgroundColor = self.viewModel.config.barColor
-
+        
         let leftLine = UIView()
         leftLine.backgroundColor = self.viewModel.config.separateColor
         
