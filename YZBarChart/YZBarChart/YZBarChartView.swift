@@ -229,6 +229,6 @@ extension YZBarChartView {
 extension YZBarChartView: YZBarViewDelegate {
     
     public func getBarChartHeight() -> Double {
-        return Double(self.bounds.height)
+        return (Double(self.bounds.height - self.label.bounds.height - 20))
     }
 }
