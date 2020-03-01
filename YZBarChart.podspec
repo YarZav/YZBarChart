@@ -6,7 +6,7 @@ Pod::Spec.new do |s|
    s.summary = "YZBarChart this is simple bar chart view"
    s.requires_arc = true
 
-   s.version = "1.0.0"
+   s.version = "1.2.0"
 
    s.author = { "Yaroslav Zavyalov" => "yaroslavzavyalov1@gmail.com" }
 
